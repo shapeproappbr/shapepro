@@ -1,0 +1,27 @@
+﻿# Dependencias
+/vendor/
+
+# Ambiente
+.env
+.env.local
+.env.*.local
+
+# Claude Code (configuracoes locais)
+.claude/
+
+# Logs e cache
+/logs/*
+!/logs/.gitkeep
+/storage/cache/*
+/storage/uploads/*
+!/storage/.gitkeep
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
