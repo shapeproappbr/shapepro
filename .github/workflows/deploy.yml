@@ -15,16 +15,17 @@ jobs:
       - name: Baixar código do repositório
         uses: actions/checkout@v4
 
-      - name: Carregar chave SSH no agente
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: Adicionar servidor aos hosts conhecidos
-        run: ssh-keyscan -H 200.234.207.82 >> ~/.ssh/known_hosts
+      - name: Configurar chave SSH
+        env:
+          PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H 200.234.207.82 >> ~/.ssh/known_hosts
 
       - name: Testar conexão SSH com o servidor
-        run: ssh -o StrictHostKeyChecking=no root@200.234.207.82 "echo '[OK] SSH conectado como:' && whoami"
+        run: ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no root@200.234.207.82 "echo OK && whoami"
 
       - name: Enviar arquivos via rsync
         run: |
@@ -37,4 +38,5 @@ jobs:
             --exclude='logs/' \
             --exclude='storage/' \
             --exclude='CHANGELOG_CLAUDE.md' \
+            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no" \
             ./ root@200.234.207.82:/var/www/shapepro/
