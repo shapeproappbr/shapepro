@@ -1,0 +1,25 @@
+Options -Indexes
+RewriteEngine On
+
+# Suporte a subdiretório (ex: /shapepro/public)
+RewriteBase /shapepro/
+
+# Forçar HTTPS em produção
+# RewriteCond %{HTTPS} off
+# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Negar acesso a arquivos sensíveis
+<FilesMatch "\.(env|sql|log|md)$">
+    Require all denied
+</FilesMatch>
+
+# Redirecionar para index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
+
+# Headers de segurança
+Header set X-Frame-Options "SAMEORIGIN"
+Header set X-Content-Type-Options "nosniff"
+Header set X-XSS-Protection "1; mode=block"
+Header set Referrer-Policy "strict-origin-when-cross-origin"

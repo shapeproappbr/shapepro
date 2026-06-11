@@ -1,0 +1,64 @@
+# Variáveis de ambiente e credenciais
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.pfx
+secrets.php
+config/credentials.php
+
+# Logs
+*.log
+logs/
+storage/logs/
+
+# Uploads e arquivos temporários do usuário
+public/uploads/
+public/tmp/
+tmp/
+temp/
+
+# Backups e dumps de banco de dados
+*.sql.gz
+*.sql.bz2
+*.dump
+*.bak
+*_backup.*
+backups/
+dumps/
+
+# Cache
+cache/
+storage/cache/
+*.cache
+
+# Dependências PHP
+vendor/
+composer.lock
+
+# Dependências Node.js
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# IDEs e editores
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Sistema operacional
+desktop.ini
+ehthumbs.db
+
+# Arquivos compilados / gerados
+*.min.css.map
+*.min.js.map
+
+# Diretório do Claude Code (interno)
+.claude/
